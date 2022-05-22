@@ -1,7 +1,7 @@
 # Storefront Backend Project
 
 ## Port number for db and server
-The port for the server is 3000 and the database on port 5432
+The port for the server is 3000 and the database on port 8080
 
 
 ### The database schema and and API routes is in the REQUIREMENT.md
