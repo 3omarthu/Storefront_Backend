@@ -12,7 +12,7 @@ These are the notes from a meeting with the frontend developer that describe wha
 #### Users
 - Index [token required] 'user/' //GET
 - Show [token required] 'user//:id' //GET
-- Create N[token required] 'user/' //POST
+- Create [token not required] 'user/' //POST
 
 #### Orders
 - Current Order by user (args: user id)[token required] '/order/:user_id' //GET
@@ -40,4 +40,4 @@ product_id
 quantity 
 user_id
 status 
-Table: orders (id:serial[primary key], product_id:integer(foreign key to products table), quantity:integer, user_id:integer(foreign key to users table), status: varchar(150) [NOT NULL])
+Table: orders (id:serial[primary key], product_id:integer(foreign key to products table), quantity:integer, user_id:integer(foreign key to users table), status: varchar(150) [NOT NULL])   

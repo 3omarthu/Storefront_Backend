@@ -1,10 +1,14 @@
 import { Application, Router } from 'express';
 
-import { Controller } from './Controller/Controller';
+import { OrderController } from './Controller/Orders';
+import { ProductController } from './Controller/Products';
+import { UserController } from './Controller/Users';
 
 
 const _routes: [string, Router][] = [
-  ['/', Controller]
+  ['/order', OrderController],
+  ['/product', ProductController],
+  ['/user', UserController]
 ];
 
 export const routes: Function = (app: Application): void => {
