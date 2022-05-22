@@ -45,17 +45,17 @@ yarn watch
 yarn test
 
 ## Setup db and server instructions.
-Databases Creation.
-We have to create the dev and test databases.
+#### Databases Creation.
+#### We have to create the dev and test databases.
 
-connect to postgres database psql -U postgres
-run create a user
-CREATE USER store_user WITH PASSWORD 'user123123';
-run CREATE DATABASE store;  And then CREATE DATABASE test_store;
-Connect to the databases and grant all privileges
-Grant for dev database
-\c store
-GRANT ALL PRIVILEGES ON DATABASE store TO store_user;
-Grant for test database
-\c test_store
-GRANT ALL PRIVILEGES ON DATABASE test_store TO store_user;
+#### connect to postgres database psql -U postgres
+#### run create a user
+#### CREATE USER store_user WITH PASSWORD 'user123123';
+#### run CREATE DATABASE store;  And then CREATE DATABASE test_store;
+#### Connect to the databases and grant all privileges
+#### Grant for dev database
+#### \c store
+#### GRANT ALL PRIVILEGES ON DATABASE store TO store_user;
+#### Grant for test database
+#### \c test_store
+#### GRANT ALL PRIVILEGES ON DATABASE test_store TO store_user;
