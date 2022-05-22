@@ -1,6 +1,7 @@
 import { Router, Response, Request } from 'express';
 import { storeProducts } from '../Model/Products';
 import { token } from '../Middleware/Authintication';
+
 export const ProductController: Router = Router();
 const product = new storeProducts();
 
