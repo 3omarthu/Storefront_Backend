@@ -35,12 +35,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 exports.__esModule = true;
 exports.storeProducts = void 0;
-var database_1 = __importDefault(require("../../database"));
+var database_1 = require("../../database");
 var storeProducts = /** @class */ (function () {
     function storeProducts() {
     }
@@ -51,7 +48,7 @@ var storeProducts = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 3, , 4]);
-                        return [4 /*yield*/, database_1["default"].connect()];
+                        return [4 /*yield*/, database_1.client.connect()];
                     case 1:
                         conn = _a.sent();
                         sql = 'SELECT * FROM products';
@@ -62,7 +59,7 @@ var storeProducts = /** @class */ (function () {
                         return [2 /*return*/, result.rows];
                     case 3:
                         err_1 = _a.sent();
-                        throw new Error("Could not get products. Error: ".concat(err_1));
+                        throw new Error("Could not get products. Error: " + err_1);
                     case 4: return [2 /*return*/];
                 }
             });
@@ -76,7 +73,7 @@ var storeProducts = /** @class */ (function () {
                     case 0:
                         _a.trys.push([0, 3, , 4]);
                         sql = 'SELECT * FROM products WHERE id=($1)';
-                        return [4 /*yield*/, database_1["default"].connect()];
+                        return [4 /*yield*/, database_1.client.connect()];
                     case 1:
                         conn = _a.sent();
                         return [4 /*yield*/, conn.query(sql, [id])];
@@ -86,7 +83,7 @@ var storeProducts = /** @class */ (function () {
                         return [2 /*return*/, result.rows[0]];
                     case 3:
                         err_2 = _a.sent();
-                        throw new Error("Could not find product ".concat(id, ". Error: ").concat(err_2));
+                        throw new Error("Could not find product " + id + ". Error: " + err_2);
                     case 4: return [2 /*return*/];
                 }
             });
@@ -99,8 +96,8 @@ var storeProducts = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 3, , 4]);
-                        sql = 'INSERT INTO products (name, price) VALUES($1, $2, $3) RETURNING *';
-                        return [4 /*yield*/, database_1["default"].connect()];
+                        sql = 'INSERT INTO products (name, price) VALUES($1, $2) RETURNING *';
+                        return [4 /*yield*/, database_1.client.connect()];
                     case 1:
                         conn = _a.sent();
                         return [4 /*yield*/, conn.query(sql, [b.name, b.price])];
@@ -111,7 +108,31 @@ var storeProducts = /** @class */ (function () {
                         return [2 /*return*/, product];
                     case 3:
                         err_3 = _a.sent();
-                        throw new Error("Could not add new product. Error: ".concat(err_3));
+                        throw new Error("Could not add new product. Error: " + err_3);
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    storeProducts.prototype["delete"] = function (id) {
+        return __awaiter(this, void 0, void 0, function () {
+            var sql, conn, result, err_4;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 3, , 4]);
+                        sql = 'DELETE FROM products WHERE id=$1';
+                        return [4 /*yield*/, database_1.client.connect()];
+                    case 1:
+                        conn = _a.sent();
+                        return [4 /*yield*/, conn.query(sql, [id])];
+                    case 2:
+                        result = _a.sent();
+                        conn.release();
+                        return [2 /*return*/, result.rows[0]];
+                    case 3:
+                        err_4 = _a.sent();
+                        throw new Error("Could not find product " + id + ". Error: " + err_4);
                     case 4: return [2 /*return*/];
                 }
             });

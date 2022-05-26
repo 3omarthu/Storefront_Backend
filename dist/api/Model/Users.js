@@ -39,29 +39,27 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 exports.__esModule = true;
-exports.userstore = exports.generateToken = void 0;
+exports.userstore = void 0;
 //npm i pg-pool pgimport bcrypt from 'bcrypt'
-var database_1 = __importDefault(require("../../database"));
+var database_1 = require("../../database");
 var bcrypt_1 = __importDefault(require("bcrypt"));
 var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-var generateToken = function (id) {
-    return jsonwebtoken_1["default"].sign(id.toString(), process.env.Secret);
-};
-exports.generateToken = generateToken;
+var saltRounds = process.env.SALT_ROUNDS;
+var pepper = process.env.BCRYPT_PASSWORD;
 var userstore = /** @class */ (function () {
     function userstore() {
     }
     userstore.prototype.index = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var conn, sql, result, err_1;
+            var sql, conn, result, err_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 3, , 4]);
-                        return [4 /*yield*/, database_1["default"].connect()];
+                        sql = 'SELECT * FROM users';
+                        return [4 /*yield*/, database_1.client.connect()];
                     case 1:
                         conn = _a.sent();
-                        sql = 'SELECT * FROM users';
                         return [4 /*yield*/, conn.query(sql)];
                     case 2:
                         result = _a.sent();
@@ -69,7 +67,7 @@ var userstore = /** @class */ (function () {
                         return [2 /*return*/, result.rows];
                     case 3:
                         err_1 = _a.sent();
-                        throw new Error("Could not get users. Error: ".concat(err_1));
+                        throw new Error("Could not get users. Error: " + err_1);
                     case 4: return [2 /*return*/];
                 }
             });
@@ -83,7 +81,7 @@ var userstore = /** @class */ (function () {
                     case 0:
                         _a.trys.push([0, 3, , 4]);
                         sql = 'SELECT * FROM users WHERE id=($1)';
-                        return [4 /*yield*/, database_1["default"].connect()];
+                        return [4 /*yield*/, database_1.client.connect()];
                     case 1:
                         conn = _a.sent();
                         return [4 /*yield*/, conn.query(sql, [id])];
@@ -93,37 +91,58 @@ var userstore = /** @class */ (function () {
                         return [2 /*return*/, result.rows[0]];
                     case 3:
                         err_2 = _a.sent();
-                        throw new Error("Could not find user ".concat(id, ". Error: ").concat(err_2));
+                        throw new Error("Could not find user " + id + ". Error: " + err_2);
                     case 4: return [2 /*return*/];
                 }
             });
         });
     };
-    userstore.prototype.create = function (b) {
+    userstore.prototype.create = function (u) {
         return __awaiter(this, void 0, void 0, function () {
-            var saltRounds, pepper, hash, sql, conn, result, user, user_id, token, err_3;
+            var conn, sql, hash, result, user, token, err_3;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 3, , 4]);
-                        saltRounds = process.env.SALT_ROUNDS;
-                        pepper = process.env.BCRYPT_PASSWORD;
-                        hash = bcrypt_1["default"].hashSync(b.password + pepper, parseInt(saltRounds));
-                        sql = 'INSERT INTO users (firstName, lastName, password) VALUES($1, $2, $3) RETURNING *';
-                        return [4 /*yield*/, database_1["default"].connect()];
+                        return [4 /*yield*/, database_1.client.connect()];
                     case 1:
                         conn = _a.sent();
-                        return [4 /*yield*/, conn.query(sql, [b.firstName, b.lastName, hash])];
+                        sql = 'INSERT INTO users (firstName, lastName, password) VALUES( $1, $2, $3) RETURNING *';
+                        hash = bcrypt_1["default"].hashSync(u.password + pepper, parseInt(saltRounds));
+                        return [4 /*yield*/, conn.query(sql, [u.firstname, u.lastname, hash])];
                     case 2:
                         result = _a.sent();
                         user = result.rows[0];
                         conn.release();
-                        user_id = result.rows[0].id;
-                        token = (0, exports.generateToken)(user_id);
+                        token = jsonwebtoken_1["default"].sign(user, process.env.Secret);
                         return [2 /*return*/, token];
                     case 3:
                         err_3 = _a.sent();
-                        throw new Error("Could not add new user. Error: ".concat(err_3));
+                        throw new Error("unable to create user, " + err_3);
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    userstore.prototype["delete"] = function (id) {
+        return __awaiter(this, void 0, void 0, function () {
+            var sql, conn, result, err_4;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 3, , 4]);
+                        sql = 'DELETE FROM users WHERE id=$1';
+                        return [4 /*yield*/, database_1.client.connect()];
+                    case 1:
+                        conn = _a.sent();
+                        return [4 /*yield*/, conn.query(sql, [id])];
+                    case 2:
+                        result = _a.sent();
+                        conn.release();
+                        return [2 /*return*/, result.rows[0]];
+                    case 3:
+                        err_4 = _a.sent();
+                        throw new Error("Could not find user " + id + ". Error: " + err_4);
                     case 4: return [2 /*return*/];
                 }
             });

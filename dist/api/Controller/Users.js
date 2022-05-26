@@ -35,42 +35,86 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 exports.__esModule = true;
 exports.UserController = void 0;
 var express_1 = require("express");
 var Users_1 = require("../Model/Users");
-var Authintication_1 = require("../Middleware/Authintication");
-exports.UserController = (0, express_1.Router)();
+var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+exports.UserController = express_1.Router();
 var user = new Users_1.userstore();
-exports.UserController.post('/', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var addedUser;
+exports.UserController.post('/create', function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var addUser;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, user.create(req.body)];
+            case 0: return [4 /*yield*/, user.create(_req.body)];
             case 1:
-                addedUser = _a.sent();
-                return [2 /*return*/, res.json(addedUser)];
+                addUser = _a.sent();
+                return [2 /*return*/, res.json(addUser)];
         }
     });
 }); });
-exports.UserController.get('/', Authintication_1.token, function (_, res) { return __awaiter(void 0, void 0, void 0, function () {
+exports.UserController.get('/list', function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var storeUsers;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, user.index()];
+            case 0:
+                //return res.json(process.env.Secret as string);
+                try {
+                    jsonwebtoken_1["default"].verify(_req.body.token, process.env.Secret);
+                }
+                catch (_b) {
+                    res.status(401);
+                    res.json("invalid access");
+                    return [2 /*return*/];
+                }
+                return [4 /*yield*/, user.index()];
             case 1:
                 storeUsers = _a.sent();
                 return [2 /*return*/, res.json(storeUsers)];
         }
     });
 }); });
-exports.UserController.get('/:id', Authintication_1.token, function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+exports.UserController.get('/:id', function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var id, storeUser;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                id = req.params.id;
+                //return res.json(_req.body.token);
+                try {
+                    jsonwebtoken_1["default"].verify(_req.body.token, process.env.Secret);
+                }
+                catch (_b) {
+                    res.status(401);
+                    res.json("invalid access");
+                    return [2 /*return*/];
+                }
+                id = _req.params.id;
                 return [4 /*yield*/, user.show(id)];
+            case 1:
+                storeUser = _a.sent();
+                return [2 /*return*/, res.json(storeUser)];
+        }
+    });
+}); });
+exports.UserController["delete"]('/delete', function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var decoded, id, storeUser;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                //return _req;
+                try {
+                    decoded = jsonwebtoken_1["default"].verify(_req.body.token, process.env.Secret);
+                }
+                catch (_b) {
+                    res.status(401);
+                    res.json("invalid access");
+                    return [2 /*return*/];
+                }
+                id = _req.body.id;
+                return [4 /*yield*/, user["delete"](id)];
             case 1:
                 storeUser = _a.sent();
                 return [2 /*return*/, res.json(storeUser)];

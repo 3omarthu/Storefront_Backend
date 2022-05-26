@@ -42,7 +42,7 @@ exports.__esModule = true;
 exports.token = void 0;
 var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 jsonwebtoken_1["default"].sign;
-var token = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+var token = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
     var authorizationHeader, token_1, decoded;
     return __generator(this, function (_a) {
         try {

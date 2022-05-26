@@ -1,7 +1,7 @@
 import express, { Application } from 'express';
 import { routes } from './api/routes';
 
-const app: Application = express()
+const app: Application = express();
 const address: string = "0.0.0.0:3000"
 
 app.use(express.json());

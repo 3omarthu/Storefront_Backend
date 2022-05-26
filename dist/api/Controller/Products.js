@@ -35,42 +35,92 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 exports.__esModule = true;
 exports.ProductController = void 0;
 var express_1 = require("express");
 var Products_1 = require("../Model/Products");
-var Authintication_1 = require("../Middleware/Authintication");
-exports.ProductController = (0, express_1.Router)();
+var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+exports.ProductController = express_1.Router();
 var product = new Products_1.storeProducts();
-exports.ProductController.post('/', Authintication_1.token, function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+exports.ProductController.post('/create', function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var createdProduct;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, product.create(req.body)];
+            case 0:
+                try {
+                    jsonwebtoken_1["default"].verify(_req.body.token, process.env.Secret);
+                }
+                catch (_b) {
+                    res.status(401);
+                    res.json("invalid access");
+                    return [2 /*return*/];
+                }
+                return [4 /*yield*/, product.create(_req.body)];
             case 1:
                 createdProduct = _a.sent();
                 return [2 /*return*/, res.json(createdProduct)];
         }
     });
 }); });
-exports.ProductController.get('/', function (_, res) { return __awaiter(void 0, void 0, void 0, function () {
+exports.ProductController.get('/list', function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var allProducts;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, product.index()];
+            case 0:
+                try {
+                    jsonwebtoken_1["default"].verify(_req.body.token, process.env.Secret);
+                }
+                catch (_b) {
+                    res.status(401);
+                    res.json("invalid access");
+                    return [2 /*return*/];
+                }
+                return [4 /*yield*/, product.index()];
             case 1:
                 allProducts = _a.sent();
                 return [2 /*return*/, res.json(allProducts)];
         }
     });
 }); });
-exports.ProductController.get('//:id', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+exports.ProductController.get('/:id', function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var product_Id, productById;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                product_Id = req.params.id;
+                try {
+                    jsonwebtoken_1["default"].verify(_req.body.token, process.env.Secret);
+                }
+                catch (_b) {
+                    res.status(401);
+                    res.json("invalid access");
+                    return [2 /*return*/];
+                }
+                product_Id = _req.params.id;
                 return [4 /*yield*/, product.show(product_Id)];
+            case 1:
+                productById = _a.sent();
+                return [2 /*return*/, res.json(productById)];
+        }
+    });
+}); });
+exports.ProductController["delete"]('/delete', function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var id, productById;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                try {
+                    jsonwebtoken_1["default"].verify(_req.body.token, process.env.Secret);
+                }
+                catch (_b) {
+                    res.status(401);
+                    res.json("invalid access");
+                    return [2 /*return*/];
+                }
+                id = _req.body.id;
+                return [4 /*yield*/, product["delete"](id)];
             case 1:
                 productById = _a.sent();
                 return [2 /*return*/, res.json(productById)];

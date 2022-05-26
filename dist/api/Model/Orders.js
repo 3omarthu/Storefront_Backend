@@ -37,6 +37,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 exports.__esModule = true;
 exports.storeOrders = void 0;
+var database_1 = require("../../database");
 var storeOrders = /** @class */ (function () {
     function storeOrders() {
     }
@@ -47,7 +48,7 @@ var storeOrders = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 3, , 4]);
-                        return [4 /*yield*/, Client.connect()];
+                        return [4 /*yield*/, database_1.client.connect()];
                     case 1:
                         conn = _a.sent();
                         sql = 'SELECT * FROM orders WHERE user_id = ($1)';
@@ -58,7 +59,56 @@ var storeOrders = /** @class */ (function () {
                         return [2 /*return*/, result.rows[0]];
                     case 3:
                         err_1 = _a.sent();
-                        throw new Error("Could not get orders. Error: ".concat(err_1));
+                        throw new Error("Could not get orders. Error: " + err_1);
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    storeOrders.prototype.create = function (o) {
+        return __awaiter(this, void 0, void 0, function () {
+            var sql, conn, result, order, err_2;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 3, , 4]);
+                        sql = 'INSERT INTO orders (product_id, quantity, user_id, status) VALUES($1, $2, $3, $4) RETURNING *';
+                        return [4 /*yield*/, database_1.client.connect()];
+                    case 1:
+                        conn = _a.sent();
+                        return [4 /*yield*/, conn.query(sql, [o.product_id, o.quantity, o.user_id, o.status])];
+                    case 2:
+                        result = _a.sent();
+                        order = result.rows[0];
+                        conn.release();
+                        return [2 /*return*/, order];
+                    case 3:
+                        err_2 = _a.sent();
+                        throw new Error("Could not add new order. Error: " + err_2);
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    storeOrders.prototype["delete"] = function (id) {
+        return __awaiter(this, void 0, void 0, function () {
+            var sql, conn, result, err_3;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 3, , 4]);
+                        sql = 'DELETE FROM orders WHERE id=$1';
+                        return [4 /*yield*/, database_1.client.connect()];
+                    case 1:
+                        conn = _a.sent();
+                        return [4 /*yield*/, conn.query(sql, [id])];
+                    case 2:
+                        result = _a.sent();
+                        conn.release();
+                        return [2 /*return*/, result.rows[0]];
+                    case 3:
+                        err_3 = _a.sent();
+                        throw new Error("Could not find orders " + id + ". Error: " + err_3);
                     case 4: return [2 /*return*/];
                 }
             });

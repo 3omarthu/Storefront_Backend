@@ -35,23 +35,75 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 exports.__esModule = true;
 exports.OrderController = void 0;
 var express_1 = require("express");
 var Orders_1 = require("../Model/Orders");
-var Authintication_1 = require("../Middleware/Authintication");
-exports.OrderController = (0, express_1.Router)();
+var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+exports.OrderController = express_1.Router();
 var order = new Orders_1.storeOrders();
-exports.OrderController.get('/:user_id', Authintication_1.token, function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+exports.OrderController.get('/:user_id', function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var user_id, currentOrder;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                user_id = parseInt(req.params.user_id);
+                try {
+                    jsonwebtoken_1["default"].verify(_req.body.token, process.env.Secret);
+                }
+                catch (_b) {
+                    res.status(401);
+                    res.json("invalid access");
+                    return [2 /*return*/];
+                }
+                user_id = (_req.params.user_id);
                 return [4 /*yield*/, order.Show(user_id)];
             case 1:
                 currentOrder = _a.sent();
                 return [2 /*return*/, res.json(currentOrder)];
+        }
+    });
+}); });
+exports.OrderController.post('/', function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var createdOrder;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                try {
+                    jsonwebtoken_1["default"].verify(_req.body.token, process.env.Secret);
+                }
+                catch (_b) {
+                    res.status(401);
+                    res.json("invalid access");
+                    return [2 /*return*/];
+                }
+                return [4 /*yield*/, order.create(_req.body)];
+            case 1:
+                createdOrder = _a.sent();
+                return [2 /*return*/, res.json(createdOrder)];
+        }
+    });
+}); });
+exports.OrderController["delete"]('/delete', function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var id, deletedOrder;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                try {
+                    jsonwebtoken_1["default"].verify(_req.body.token, process.env.Secret);
+                }
+                catch (_b) {
+                    res.status(401);
+                    res.json("invalid access");
+                    return [2 /*return*/];
+                }
+                id = (_req.body.id);
+                return [4 /*yield*/, order["delete"](id)];
+            case 1:
+                deletedOrder = _a.sent();
+                return [2 /*return*/, res.json(deletedOrder)];
         }
     });
 }); });
