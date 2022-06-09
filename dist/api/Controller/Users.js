@@ -46,78 +46,113 @@ var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 exports.UserController = express_1.Router();
 var user = new Users_1.userstore();
 exports.UserController.post('/create', function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var addUser;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, user.create(_req.body)];
+    var addUser, _a;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
+            case 0:
+                _b.trys.push([0, 2, , 3]);
+                return [4 /*yield*/, user.create(_req.body)];
             case 1:
-                addUser = _a.sent();
+                addUser = _b.sent();
                 return [2 /*return*/, res.json(addUser)];
+            case 2:
+                _a = _b.sent();
+                res.status(401);
+                res.json("Something went wrong");
+                return [2 /*return*/];
+            case 3: return [2 /*return*/];
         }
     });
 }); });
 exports.UserController.get('/list', function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var storeUsers;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
+    var storeUsers, _a;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
             case 0:
                 //return res.json(process.env.Secret as string);
                 try {
                     jsonwebtoken_1["default"].verify(_req.body.token, process.env.Secret);
                 }
-                catch (_b) {
+                catch (_c) {
                     res.status(401);
                     res.json("invalid access");
                     return [2 /*return*/];
                 }
-                return [4 /*yield*/, user.index()];
+                _b.label = 1;
             case 1:
-                storeUsers = _a.sent();
+                _b.trys.push([1, 3, , 4]);
+                return [4 /*yield*/, user.index()];
+            case 2:
+                storeUsers = _b.sent();
                 return [2 /*return*/, res.json(storeUsers)];
+            case 3:
+                _a = _b.sent();
+                res.status(401);
+                res.json("Something went wrong");
+                return [2 /*return*/];
+            case 4: return [2 /*return*/];
         }
     });
 }); });
 exports.UserController.get('/:id', function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var id, storeUser;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
+    var id, storeUser, _a;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
             case 0:
                 //return res.json(_req.body.token);
                 try {
                     jsonwebtoken_1["default"].verify(_req.body.token, process.env.Secret);
                 }
-                catch (_b) {
+                catch (_c) {
                     res.status(401);
                     res.json("invalid access");
                     return [2 /*return*/];
                 }
+                _b.label = 1;
+            case 1:
+                _b.trys.push([1, 3, , 4]);
                 id = _req.params.id;
                 return [4 /*yield*/, user.show(id)];
-            case 1:
-                storeUser = _a.sent();
+            case 2:
+                storeUser = _b.sent();
                 return [2 /*return*/, res.json(storeUser)];
+            case 3:
+                _a = _b.sent();
+                res.status(401);
+                res.json("Something went wrong");
+                return [2 /*return*/];
+            case 4: return [2 /*return*/];
         }
     });
 }); });
 exports.UserController["delete"]('/delete', function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var decoded, id, storeUser;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
+    var decoded, id, storeUser, _a;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
             case 0:
                 //return _req;
                 try {
                     decoded = jsonwebtoken_1["default"].verify(_req.body.token, process.env.Secret);
                 }
-                catch (_b) {
+                catch (_c) {
                     res.status(401);
                     res.json("invalid access");
                     return [2 /*return*/];
                 }
+                _b.label = 1;
+            case 1:
+                _b.trys.push([1, 3, , 4]);
                 id = _req.body.id;
                 return [4 /*yield*/, user["delete"](id)];
-            case 1:
-                storeUser = _a.sent();
+            case 2:
+                storeUser = _b.sent();
                 return [2 /*return*/, res.json(storeUser)];
+            case 3:
+                _a = _b.sent();
+                res.status(401);
+                res.json("Something went wrong");
+                return [2 /*return*/];
+            case 4: return [2 /*return*/];
         }
     });
 }); });

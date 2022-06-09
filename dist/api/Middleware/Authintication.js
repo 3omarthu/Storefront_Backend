@@ -39,16 +39,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 exports.__esModule = true;
-exports.token = void 0;
+exports.Token = void 0;
 var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 jsonwebtoken_1["default"].sign;
-var token = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var authorizationHeader, token_1, decoded;
+var Token = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+    var authorizationHeader, token, decoded;
     return __generator(this, function (_a) {
         try {
             authorizationHeader = req.headers.authorization;
-            token_1 = authorizationHeader ? authorizationHeader.split(' ')[1] : '';
-            decoded = jsonwebtoken_1["default"].verify(token_1, process.env.Secret);
+            token = authorizationHeader ? authorizationHeader.split(' ')[1] : '';
+            decoded = jsonwebtoken_1["default"].verify(token, process.env.Secret);
             res.locals.userData = decoded;
         }
         catch (err) {
@@ -59,4 +59,4 @@ var token = function (req, res, next) { return __awaiter(void 0, void 0, void 0,
         return [2 /*return*/];
     });
 }); };
-exports.token = token;
+exports.Token = Token;

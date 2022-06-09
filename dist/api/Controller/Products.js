@@ -46,84 +46,100 @@ var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 exports.ProductController = express_1.Router();
 var product = new Products_1.storeProducts();
 exports.ProductController.post('/create', function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var createdProduct;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
+    var createdProduct, _a;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
             case 0:
                 try {
                     jsonwebtoken_1["default"].verify(_req.body.token, process.env.Secret);
                 }
-                catch (_b) {
+                catch (_c) {
                     res.status(401);
                     res.json("invalid access");
                     return [2 /*return*/];
                 }
-                return [4 /*yield*/, product.create(_req.body)];
+                _b.label = 1;
             case 1:
-                createdProduct = _a.sent();
+                _b.trys.push([1, 3, , 4]);
+                return [4 /*yield*/, product.create(_req.body)];
+            case 2:
+                createdProduct = _b.sent();
                 return [2 /*return*/, res.json(createdProduct)];
+            case 3:
+                _a = _b.sent();
+                res.status(401);
+                res.json("Something went wrong");
+                return [2 /*return*/];
+            case 4: return [2 /*return*/];
         }
     });
 }); });
 exports.ProductController.get('/list', function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var allProducts;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
+    var allProducts, _a;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
             case 0:
-                try {
-                    jsonwebtoken_1["default"].verify(_req.body.token, process.env.Secret);
-                }
-                catch (_b) {
-                    res.status(401);
-                    res.json("invalid access");
-                    return [2 /*return*/];
-                }
+                _b.trys.push([0, 2, , 3]);
                 return [4 /*yield*/, product.index()];
             case 1:
-                allProducts = _a.sent();
+                allProducts = _b.sent();
                 return [2 /*return*/, res.json(allProducts)];
+            case 2:
+                _a = _b.sent();
+                res.status(401);
+                res.json("Something went wrong");
+                return [2 /*return*/];
+            case 3: return [2 /*return*/];
         }
     });
 }); });
 exports.ProductController.get('/:id', function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var product_Id, productById;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
+    var product_Id, productById, _a;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
             case 0:
-                try {
-                    jsonwebtoken_1["default"].verify(_req.body.token, process.env.Secret);
-                }
-                catch (_b) {
-                    res.status(401);
-                    res.json("invalid access");
-                    return [2 /*return*/];
-                }
+                _b.trys.push([0, 2, , 3]);
                 product_Id = _req.params.id;
                 return [4 /*yield*/, product.show(product_Id)];
             case 1:
-                productById = _a.sent();
+                productById = _b.sent();
                 return [2 /*return*/, res.json(productById)];
+            case 2:
+                _a = _b.sent();
+                res.status(401);
+                res.json("Something went wrong");
+                return [2 /*return*/];
+            case 3: return [2 /*return*/];
         }
     });
 }); });
 exports.ProductController["delete"]('/delete', function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var id, productById;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
+    var id, productById, _a;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
             case 0:
                 try {
                     jsonwebtoken_1["default"].verify(_req.body.token, process.env.Secret);
                 }
-                catch (_b) {
+                catch (_c) {
                     res.status(401);
                     res.json("invalid access");
                     return [2 /*return*/];
                 }
+                _b.label = 1;
+            case 1:
+                _b.trys.push([1, 3, , 4]);
                 id = _req.body.id;
                 return [4 /*yield*/, product["delete"](id)];
-            case 1:
-                productById = _a.sent();
+            case 2:
+                productById = _b.sent();
                 return [2 /*return*/, res.json(productById)];
+            case 3:
+                _a = _b.sent();
+                res.status(401);
+                res.json("Something went wrong");
+                return [2 /*return*/];
+            case 4: return [2 /*return*/];
         }
     });
 }); });

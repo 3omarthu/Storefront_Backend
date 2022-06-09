@@ -4,7 +4,13 @@ import { userstore } from '../../src/api/Model/Users';
 import { storeProducts } from '../../src/api/Model/Products';
 
 const order: storeOrders = new storeOrders();
-
+export type order = {    
+  id: number;
+  product_id: number;
+  quantity: number;
+  user_id: number;
+  status: string; //(active or complete)
+}
 describe('order model', () => {
   it('shows user order by user id', () => {
     expect(order.Show).toBeDefined();
@@ -44,16 +50,18 @@ describe('order model', () => {
         status: 'active'
       });
     });
+
     it('shows user order by user id', async () => {
-      const res = await order.Show("2");
-      expect(res).toEqual({
+      const res: order[] = await order.Show("1");
+      expect(res).toEqual([{
         id:1,
         product_id: 1,
         quantity: 2,
         user_id: 2,
         status: "active",
-      });
+      }]);
     });
+
     it('delete order', async () => {
       const res = await order.delete("1");
       expect(res).toEqual({

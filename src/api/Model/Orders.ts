@@ -8,7 +8,7 @@ export type order = {
     status: string; //(active or complete)
 }
 
-export type addOrder = {    
+export type addOrder = {
   product_id: number;
   quantity: number;
   user_id: number;
@@ -17,17 +17,19 @@ export type addOrder = {
 
 
 export class storeOrders {
-    async Show(user_id: string): Promise<order> {
+    
+    async Show(user_id: string): Promise<order[]> {
       try {
         // @ts-ignore
         const conn = await client.connect()
-        const sql = 'SELECT * FROM orders WHERE user_id = ($1)'
+
+        const sql = `SELECT * FROM orders WHERE user_id = ($1)`;
+        
+        const result = await conn.query(sql, [user_id]);
+        
+        conn.release();
   
-        const result = await conn.query(sql, [user_id])
-  
-        conn.release()
-  
-        return result.rows[0]
+        return result.rows;
       } catch (err) {
         throw new Error(`Could not get orders. Error: ${err}`)
       }

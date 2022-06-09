@@ -36,8 +36,7 @@ describe('Test Product controller response,', () => {
   });
 
   it('return all products', async (done) => {
-    const res = await request.get('/product')
-    .set('token', token);
+    const res = await request.get('/product');
 
     expect(res.status).toBe(200);
     expect(res.body[0]).toEqual([{
@@ -50,7 +49,7 @@ describe('Test Product controller response,', () => {
 
   it('create product', async (done) => {
     const res = await request.post('/product')
-      .set('token', token);
+    .set('Authorization', 'Bearer ' + token);
 
     expect(res.status).toBe(200);
     expect(res.body).toEqual({
@@ -62,8 +61,7 @@ describe('Test Product controller response,', () => {
   });
 
   it('shows product by id', async (done) => {
-    const res = await request.get('/product/1')
-    .set('token', token);
+    const res = await request.get('/product/1');
 
     expect(res.status).toBe(200);
     expect(res.body).toEqual({
@@ -76,7 +74,7 @@ describe('Test Product controller response,', () => {
 
   it('delete product', async (done) => {
     const res = await request.delete('/product/delete')
-    .set('token', token).set('id', '1');
+    .set('Authorization', 'Bearer ' + token).set('id', '1');
 
     expect(res.status).toBe(200);
     expect(res.body).toEqual({

@@ -59,3 +59,27 @@ yarn test
 #### Grant for test database
 #### \c test_store
 #### GRANT ALL PRIVILEGES ON DATABASE test_store TO store_user;
+
+## .env Variables Set up
+
+```
+NODE_ENV=dev
+POSTGRES_HOST=127.0.0.1
+POSTGRES_DB=store
+POSTGRES_USER=store_user
+POSTGRES_PASSWORD=user123123
+POSTGRES_PORT = 8080
+POSTGRES_TEST_DB=test_store
+
+Token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ODEsImZpcnN0bmFtZSI6InN0cmluZyIsImxhc3RuYW1lIjoic3RyaW5nIiwicGFzc3dvcmQiOiIkMmIkMTAkbGFrVEtyV0tvUk5TUjJNY2Jkd0pNT1BOWkNJc29KZzUwZDlxZFlaYk5nZDZwZWpPWkovVFciLCJpYXQiOjE2NTM0NzQxNzF9.Ct20rJSoetHX_Bh66z2TJAnFXTlwp3r38nD9tPQ_cXQ
+Secret =ThatisaSecret12345
+
+BCRYPT_PASSWORD=Udacity-Second-Project
+SALT_ROUNDS=10
+
+```
+
+## Start App
+`yarn watch` or `npm run watch`
+
+## The server will start on port `3000` and the database on port `5432`

@@ -46,8 +46,7 @@ describe('Test User controller response,', () => {
   });
 
   it('create user', async (done) => {
-    const res = await request.post('/user/create')
-      .set('token',  token);
+    const res = await request.post('/user/create');
 
     expect(res.status).toBe(200);
     expect(res.body).toBeDefined();
@@ -56,7 +55,7 @@ describe('Test User controller response,', () => {
 
   it('shows user by id', async (done) => {
     const res = await request.get('/user/1')
-      .set('token', token);
+    .set('Authorization', 'Bearer ' + token);
 
     expect(res.status).toBe(200);
     expect(res.body[0]).toEqual({
