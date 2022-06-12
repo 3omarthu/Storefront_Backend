@@ -56,10 +56,8 @@ yarn test
 #### Grant for dev database
 #### \c store
 #### GRANT ALL PRIVILEGES ON DATABASE store TO store_user;
-GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA store TO store_user
 #### Grant for test database
 #### \c test_store
-GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA test_store TO store_user
 #### GRANT ALL PRIVILEGES ON DATABASE test_store TO store_user;
 
 ## .env Variables Set up
