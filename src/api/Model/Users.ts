@@ -50,7 +50,7 @@ export class userstore {
   
     async create(u: addUser): Promise<string> {
       try {
-      const conn = await client.connect()
+        const conn = await client.connect()
       const sql = 'INSERT INTO users (firstName, lastName, password) VALUES( $1, $2, $3) RETURNING *'
       // @ts-ignore
       const hash = bcrypt.hashSync(

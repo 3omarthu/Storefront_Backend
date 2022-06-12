@@ -36,19 +36,19 @@ describe('Test Product controller response,', () => {
   });
 
   it('return all products', async (done) => {
-    const res = await request.get('/product');
+    const res = await request.get('/product/list');
 
     expect(res.status).toBe(200);
-    expect(res.body[0]).toEqual([{
+    expect(res.body[0]).toEqual({
       id: 1,
       name: "string",
       price: 100,
-    }]);
+    });
     done();
   });
 
   it('create product', async (done) => {
-    const res = await request.post('/product')
+    const res = await request.post('/product/create')
     .set('Authorization', 'Bearer ' + token);
 
     expect(res.status).toBe(200);

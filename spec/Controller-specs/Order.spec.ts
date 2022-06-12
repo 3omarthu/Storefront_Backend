@@ -10,23 +10,23 @@ describe('Test Order controller response,', () => {
     spyOn(storeOrders.prototype, 'create').and.returnValue(
       Promise.resolve({
         id: 1,
-        product_id: 5,
+        product_id: 1,
         quantity: 2,
         user_id: 1,
         status: 'complete',
       }))
     spyOn(storeOrders.prototype, 'Show').and.returnValue(
-      Promise.resolve({
+      Promise.resolve([{
         id: 1,
-        product_id: 5,
+        product_id: 1,
         quantity: 2,
         user_id: 1,
         status: 'complete',
-      }))
+      }]))
       spyOn(storeOrders.prototype, 'delete').and.returnValue(
         Promise.resolve({
           id: 1,
-          product_id: 5,
+          product_id: 1,
           quantity: 2,
           user_id: 1,
           status: 'complete',
@@ -39,7 +39,7 @@ describe('Test Order controller response,', () => {
     expect(res.status).toBe(200);
     expect(res.body).toEqual({
       id: 1,
-      product_id: 5,
+      product_id: 1,
       quantity: 2,
       user_id: 1,
       status: 'complete'
@@ -53,7 +53,7 @@ describe('Test Order controller response,', () => {
     expect(res.status).toBe(200);
     expect(res.body[0]).toEqual({
       id: 1,
-      product_id: 5,
+      product_id: 1,
       quantity: 2,
       user_id: 1,
       status: 'complete',
@@ -65,13 +65,13 @@ describe('Test Order controller response,', () => {
     .set('Authorization', 'Bearer ' + token).set('id', '1');
 
     expect(res.status).toBe(200);
-    expect(res.body).toEqual({
+    expect(res.body).toEqual([{
       id: 1,
-      product_id: 5,
+      product_id: 1,
       quantity: 2,
       user_id: 1,
       status: 'complete',
-    });
+    }]);
     done();
   });
 });

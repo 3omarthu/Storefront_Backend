@@ -32,16 +32,13 @@ describe('Test User controller response,', () => {
   });
 
   it('return all users', async (done) => {
-    const res = await request.get('/user')
-      .set('token', token);
+    const res = await request.get('/user/list')
+      .set('Authorization', 'Bearer ' + token);
 
     expect(res.status).toBe(200);
-    expect(res.body[0]).toEqual({
-      id: 1,
-      firstName: "omar",
-      lastName: "thu",
-      password: "string",
-    });
+    expect(res.body[0].firstname).toEqual("omar");
+    expect(res.body[0].lastname).toEqual("thu");
+
     done();
   });
 
@@ -58,10 +55,10 @@ describe('Test User controller response,', () => {
     .set('Authorization', 'Bearer ' + token);
 
     expect(res.status).toBe(200);
-    expect(res.body[0]).toEqual({
-      id: 1,
-        firstName: "omar",
-        lastName: "thu",
+    expect(res.body).toEqual({
+        id: 1,
+        firstname: "omar",
+        lastname: "thu",
         password: "string",
     });
     done();
