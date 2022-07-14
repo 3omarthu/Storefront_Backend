@@ -43,7 +43,7 @@ exports.UserController = void 0;
 var express_1 = require("express");
 var Users_1 = require("../Model/Users");
 var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-exports.UserController = express_1.Router();
+exports.UserController = (0, express_1.Router)();
 var user = new Users_1.userstore();
 exports.UserController.post('/create', function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var addUser, _a;
@@ -57,7 +57,7 @@ exports.UserController.post('/create', function (_req, res) { return __awaiter(v
                 return [2 /*return*/, res.json(addUser)];
             case 2:
                 _a = _b.sent();
-                res.status(401);
+                res.status(402);
                 res.json("Something went wrong");
                 return [2 /*return*/];
             case 3: return [2 /*return*/];
@@ -65,16 +65,18 @@ exports.UserController.post('/create', function (_req, res) { return __awaiter(v
     });
 }); });
 exports.UserController.get('/list', function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var storeUsers, _a;
+    var authHead, token, storeUsers, _a;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
                 //return res.json(process.env.Secret as string);
                 try {
-                    jsonwebtoken_1["default"].verify(_req.body.token, process.env.Secret);
+                    authHead = _req.headers.authorization;
+                    token = authHead ? authHead.split(' ')[1] : '';
+                    jsonwebtoken_1["default"].verify(token, process.env.Secret);
                 }
                 catch (_c) {
-                    res.status(401);
+                    res.status(402);
                     res.json("invalid access");
                     return [2 /*return*/];
                 }
@@ -87,7 +89,7 @@ exports.UserController.get('/list', function (_req, res) { return __awaiter(void
                 return [2 /*return*/, res.json(storeUsers)];
             case 3:
                 _a = _b.sent();
-                res.status(401);
+                res.status(402);
                 res.json("Something went wrong");
                 return [2 /*return*/];
             case 4: return [2 /*return*/];
@@ -95,16 +97,17 @@ exports.UserController.get('/list', function (_req, res) { return __awaiter(void
     });
 }); });
 exports.UserController.get('/:id', function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var id, storeUser, _a;
+    var authHead, token, id, storeUser, _a;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
-                //return res.json(_req.body.token);
                 try {
-                    jsonwebtoken_1["default"].verify(_req.body.token, process.env.Secret);
+                    authHead = _req.headers.authorization;
+                    token = authHead ? authHead.split(' ')[1] : '';
+                    jsonwebtoken_1["default"].verify(token, process.env.Secret);
                 }
                 catch (_c) {
-                    res.status(401);
+                    res.status(402);
                     res.json("invalid access");
                     return [2 /*return*/];
                 }
@@ -118,7 +121,7 @@ exports.UserController.get('/:id', function (_req, res) { return __awaiter(void 
                 return [2 /*return*/, res.json(storeUser)];
             case 3:
                 _a = _b.sent();
-                res.status(401);
+                res.status(402);
                 res.json("Something went wrong");
                 return [2 /*return*/];
             case 4: return [2 /*return*/];
@@ -126,16 +129,17 @@ exports.UserController.get('/:id', function (_req, res) { return __awaiter(void 
     });
 }); });
 exports.UserController["delete"]('/delete', function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var decoded, id, storeUser, _a;
+    var authHead, token, id, storeUser, _a;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
-                //return _req;
                 try {
-                    decoded = jsonwebtoken_1["default"].verify(_req.body.token, process.env.Secret);
+                    authHead = _req.headers.authorization;
+                    token = authHead ? authHead.split(' ')[1] : '';
+                    jsonwebtoken_1["default"].verify(token, process.env.Secret);
                 }
                 catch (_c) {
-                    res.status(401);
+                    res.status(402);
                     res.json("invalid access");
                     return [2 /*return*/];
                 }
@@ -149,7 +153,7 @@ exports.UserController["delete"]('/delete', function (_req, res) { return __awai
                 return [2 /*return*/, res.json(storeUser)];
             case 3:
                 _a = _b.sent();
-                res.status(401);
+                res.status(402);
                 res.json("Something went wrong");
                 return [2 /*return*/];
             case 4: return [2 /*return*/];

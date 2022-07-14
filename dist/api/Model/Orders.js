@@ -51,15 +51,15 @@ var storeOrders = /** @class */ (function () {
                         return [4 /*yield*/, database_1.client.connect()];
                     case 1:
                         conn = _a.sent();
-                        sql = 'SELECT * FROM orders WHERE user_id = ($1)';
+                        sql = "SELECT * FROM orders WHERE user_id = ($1)";
                         return [4 /*yield*/, conn.query(sql, [user_id])];
                     case 2:
                         result = _a.sent();
                         conn.release();
-                        return [2 /*return*/, result.rows[0]];
+                        return [2 /*return*/, result.rows];
                     case 3:
                         err_1 = _a.sent();
-                        throw new Error("Could not get orders. Error: " + err_1);
+                        throw new Error("Could not get orders. Error: ".concat(err_1));
                     case 4: return [2 /*return*/];
                 }
             });
@@ -67,15 +67,15 @@ var storeOrders = /** @class */ (function () {
     };
     storeOrders.prototype.create = function (o) {
         return __awaiter(this, void 0, void 0, function () {
-            var sql, conn, result, order, err_2;
+            var conn, sql, result, order, err_2;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 3, , 4]);
-                        sql = 'INSERT INTO orders (product_id, quantity, user_id, status) VALUES($1, $2, $3, $4) RETURNING *';
                         return [4 /*yield*/, database_1.client.connect()];
                     case 1:
                         conn = _a.sent();
+                        sql = 'INSERT INTO orders (product_id, quantity, user_id, status) VALUES($1, $2, $3, $4) RETURNING *';
                         return [4 /*yield*/, conn.query(sql, [o.product_id, o.quantity, o.user_id, o.status])];
                     case 2:
                         result = _a.sent();
@@ -84,7 +84,7 @@ var storeOrders = /** @class */ (function () {
                         return [2 /*return*/, order];
                     case 3:
                         err_2 = _a.sent();
-                        throw new Error("Could not add new order. Error: " + err_2);
+                        throw new Error("Could not add new order. Error: ".concat(err_2));
                     case 4: return [2 /*return*/];
                 }
             });
@@ -108,7 +108,7 @@ var storeOrders = /** @class */ (function () {
                         return [2 /*return*/, result.rows[0]];
                     case 3:
                         err_3 = _a.sent();
-                        throw new Error("Could not find orders " + id + ". Error: " + err_3);
+                        throw new Error("Could not find orders ".concat(id, ". Error: ").concat(err_3));
                     case 4: return [2 /*return*/];
                 }
             });

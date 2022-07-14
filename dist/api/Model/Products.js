@@ -59,7 +59,7 @@ var storeProducts = /** @class */ (function () {
                         return [2 /*return*/, result.rows];
                     case 3:
                         err_1 = _a.sent();
-                        throw new Error("Could not get products. Error: " + err_1);
+                        throw new Error("Could not get products. Error: ".concat(err_1));
                     case 4: return [2 /*return*/];
                 }
             });
@@ -83,7 +83,7 @@ var storeProducts = /** @class */ (function () {
                         return [2 /*return*/, result.rows[0]];
                     case 3:
                         err_2 = _a.sent();
-                        throw new Error("Could not find product " + id + ". Error: " + err_2);
+                        throw new Error("Could not find product ".concat(id, ". Error: ").concat(err_2));
                     case 4: return [2 /*return*/];
                 }
             });
@@ -108,7 +108,7 @@ var storeProducts = /** @class */ (function () {
                         return [2 /*return*/, product];
                     case 3:
                         err_3 = _a.sent();
-                        throw new Error("Could not add new product. Error: " + err_3);
+                        throw new Error("Could not add new product. Error: ".concat(err_3));
                     case 4: return [2 /*return*/];
                 }
             });
@@ -132,7 +132,7 @@ var storeProducts = /** @class */ (function () {
                         return [2 /*return*/, result.rows[0]];
                     case 3:
                         err_4 = _a.sent();
-                        throw new Error("Could not find product " + id + ". Error: " + err_4);
+                        throw new Error("Could not find product ".concat(id, ". Error: ").concat(err_4));
                     case 4: return [2 /*return*/];
                 }
             });

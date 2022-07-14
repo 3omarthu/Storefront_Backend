@@ -41,15 +41,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 exports.__esModule = true;
 exports.Token = void 0;
 var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-jsonwebtoken_1["default"].sign;
 var Token = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var authorizationHeader, token, decoded;
+    var authHead, token, decoded;
     return __generator(this, function (_a) {
         try {
-            authorizationHeader = req.headers.authorization;
-            token = authorizationHeader ? authorizationHeader.split(' ')[1] : '';
-            decoded = jsonwebtoken_1["default"].verify(token, process.env.Secret);
+            authHead = req.headers.authorization;
+            token = authHead ? authHead.split(' ')[1] : '';
+            decoded = jsonwebtoken_1["default"].verify(token, process.env.JWT_SECRET);
             res.locals.userData = decoded;
+            next();
         }
         catch (err) {
             res.status(401);

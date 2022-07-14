@@ -67,7 +67,7 @@ var userstore = /** @class */ (function () {
                         return [2 /*return*/, result.rows];
                     case 3:
                         err_1 = _a.sent();
-                        throw new Error("Could not get users. Error: " + err_1);
+                        throw new Error("Could not get users. Error: ".concat(err_1));
                     case 4: return [2 /*return*/];
                 }
             });
@@ -91,7 +91,7 @@ var userstore = /** @class */ (function () {
                         return [2 /*return*/, result.rows[0]];
                     case 3:
                         err_2 = _a.sent();
-                        throw new Error("Could not find user " + id + ". Error: " + err_2);
+                        throw new Error("Could not find user ".concat(id, ". Error: ").concat(err_2));
                     case 4: return [2 /*return*/];
                 }
             });
@@ -118,7 +118,7 @@ var userstore = /** @class */ (function () {
                         return [2 /*return*/, token];
                     case 3:
                         err_3 = _a.sent();
-                        throw new Error("unable to create user, " + err_3);
+                        throw new Error("unable to create user, ".concat(err_3));
                     case 4: return [2 /*return*/];
                 }
             });
@@ -142,7 +142,7 @@ var userstore = /** @class */ (function () {
                         return [2 /*return*/, result.rows[0]];
                     case 3:
                         err_4 = _a.sent();
-                        throw new Error("Could not find user " + id + ". Error: " + err_4);
+                        throw new Error("Could not find user ".concat(id, ". Error: ").concat(err_4));
                     case 4: return [2 /*return*/];
                 }
             });

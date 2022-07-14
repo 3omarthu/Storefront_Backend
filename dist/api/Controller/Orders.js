@@ -43,19 +43,20 @@ exports.OrderController = void 0;
 var express_1 = require("express");
 var Orders_1 = require("../Model/Orders");
 var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-var Authintication_1 = require("../Middleware/Authintication");
-exports.OrderController = express_1.Router();
+exports.OrderController = (0, express_1.Router)();
 var order = new Orders_1.storeOrders();
-exports.OrderController.get('/:user_id', Authintication_1.Token, function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var user_id, currentOrder, _a;
+exports.OrderController.get('/:user_id', function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var authHead, token, user_id, currentOrder, _a;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
                 try {
-                    jsonwebtoken_1["default"].verify(_req.body.token, process.env.Secret);
+                    authHead = _req.headers.authorization;
+                    token = authHead ? authHead.split(' ')[1] : '';
+                    jsonwebtoken_1["default"].verify(token, process.env.Secret);
                 }
                 catch (_c) {
-                    res.status(401);
+                    res.status(402);
                     res.json("invalid access");
                     return [2 /*return*/];
                 }
@@ -69,42 +70,56 @@ exports.OrderController.get('/:user_id', Authintication_1.Token, function (_req,
                 return [2 /*return*/, res.json(currentOrder)];
             case 3:
                 _a = _b.sent();
-                res.status(401);
+                res.status(402);
                 res.json("Something went wrong");
                 return [2 /*return*/];
             case 4: return [2 /*return*/];
         }
     });
 }); });
-exports.OrderController.post('/', Authintication_1.Token, function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var createdOrder, _a;
-    return __generator(this, function (_b) {
-        switch (_b.label) {
-            case 0:
-                _b.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, order.create(_req.body)];
-            case 1:
-                createdOrder = _b.sent();
-                return [2 /*return*/, res.json(createdOrder)];
-            case 2:
-                _a = _b.sent();
-                res.status(401);
-                res.json("Something went wrong");
-                return [2 /*return*/];
-            case 3: return [2 /*return*/];
-        }
-    });
-}); });
-exports.OrderController["delete"]('/delete', function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var id, deletedOrder, _a;
+exports.OrderController.post('/', function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var authHead, token, createdOrder, _a;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
                 try {
-                    jsonwebtoken_1["default"].verify(_req.body.token, process.env.Secret);
+                    authHead = _req.headers.authorization;
+                    token = authHead ? authHead.split(' ')[1] : '';
+                    jsonwebtoken_1["default"].verify(token, process.env.Secret);
                 }
                 catch (_c) {
-                    res.status(401);
+                    res.status(402);
+                    res.json("invalid access");
+                    return [2 /*return*/];
+                }
+                _b.label = 1;
+            case 1:
+                _b.trys.push([1, 3, , 4]);
+                return [4 /*yield*/, order.create(_req.body)];
+            case 2:
+                createdOrder = _b.sent();
+                return [2 /*return*/, res.json(createdOrder)];
+            case 3:
+                _a = _b.sent();
+                res.status(402);
+                res.json("Something went wrong");
+                return [2 /*return*/];
+            case 4: return [2 /*return*/];
+        }
+    });
+}); });
+exports.OrderController["delete"]('/delete', function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var authHead, token, id, deletedOrder, _a;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
+            case 0:
+                try {
+                    authHead = _req.headers.authorization;
+                    token = authHead ? authHead.split(' ')[1] : '';
+                    jsonwebtoken_1["default"].verify(token, process.env.Secret);
+                }
+                catch (_c) {
+                    res.status(402);
                     res.json("invalid access");
                     return [2 /*return*/];
                 }
@@ -118,7 +133,7 @@ exports.OrderController["delete"]('/delete', function (_req, res) { return __awa
                 return [2 /*return*/, res.json(deletedOrder)];
             case 3:
                 _a = _b.sent();
-                res.status(401);
+                res.status(402);
                 res.json("Something went wrong");
                 return [2 /*return*/];
             case 4: return [2 /*return*/];

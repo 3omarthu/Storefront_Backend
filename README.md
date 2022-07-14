@@ -18,8 +18,8 @@ db-migrate
 npm install -g db-migrate
 
 bcrypt
-npm -i bcrypt,
-npm -i -D @types/bcrypt
+npm i bcrypt,
+npm i -D @types/bcrypt
 
 jsonwebtoken
 npm install jsonwebtoken --sav,
@@ -63,7 +63,7 @@ yarn test
 ## .env Variables Set up
 
 ```
-NODE_ENV=dev
+ENV=dev
 POSTGRES_HOST=127.0.0.1
 POSTGRES_DB=store
 POSTGRES_USER=store_user

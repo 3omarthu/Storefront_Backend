@@ -43,18 +43,20 @@ exports.ProductController = void 0;
 var express_1 = require("express");
 var Products_1 = require("../Model/Products");
 var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-exports.ProductController = express_1.Router();
+exports.ProductController = (0, express_1.Router)();
 var product = new Products_1.storeProducts();
 exports.ProductController.post('/create', function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var createdProduct, _a;
+    var authHead, token, createdProduct, _a;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
                 try {
-                    jsonwebtoken_1["default"].verify(_req.body.token, process.env.Secret);
+                    authHead = _req.headers.authorization;
+                    token = authHead ? authHead.split(' ')[1] : '';
+                    jsonwebtoken_1["default"].verify(token, process.env.Secret);
                 }
                 catch (_c) {
-                    res.status(401);
+                    res.status(402);
                     res.json("invalid access");
                     return [2 /*return*/];
                 }
@@ -67,7 +69,7 @@ exports.ProductController.post('/create', function (_req, res) { return __awaite
                 return [2 /*return*/, res.json(createdProduct)];
             case 3:
                 _a = _b.sent();
-                res.status(401);
+                res.status(402);
                 res.json("Something went wrong");
                 return [2 /*return*/];
             case 4: return [2 /*return*/];
@@ -86,7 +88,7 @@ exports.ProductController.get('/list', function (_req, res) { return __awaiter(v
                 return [2 /*return*/, res.json(allProducts)];
             case 2:
                 _a = _b.sent();
-                res.status(401);
+                res.status(402);
                 res.json("Something went wrong");
                 return [2 /*return*/];
             case 3: return [2 /*return*/];
@@ -106,7 +108,7 @@ exports.ProductController.get('/:id', function (_req, res) { return __awaiter(vo
                 return [2 /*return*/, res.json(productById)];
             case 2:
                 _a = _b.sent();
-                res.status(401);
+                res.status(402);
                 res.json("Something went wrong");
                 return [2 /*return*/];
             case 3: return [2 /*return*/];
@@ -114,15 +116,17 @@ exports.ProductController.get('/:id', function (_req, res) { return __awaiter(vo
     });
 }); });
 exports.ProductController["delete"]('/delete', function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var id, productById, _a;
+    var authHead, token, id, productById, _a;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
                 try {
-                    jsonwebtoken_1["default"].verify(_req.body.token, process.env.Secret);
+                    authHead = _req.headers.authorization;
+                    token = authHead ? authHead.split(' ')[1] : '';
+                    jsonwebtoken_1["default"].verify(token, process.env.Secret);
                 }
                 catch (_c) {
-                    res.status(401);
+                    res.status(402);
                     res.json("invalid access");
                     return [2 /*return*/];
                 }
@@ -136,7 +140,7 @@ exports.ProductController["delete"]('/delete', function (_req, res) { return __a
                 return [2 /*return*/, res.json(productById)];
             case 3:
                 _a = _b.sent();
-                res.status(401);
+                res.status(402);
                 res.json("Something went wrong");
                 return [2 /*return*/];
             case 4: return [2 /*return*/];
