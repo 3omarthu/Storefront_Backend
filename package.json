@@ -2,12 +2,11 @@
   "name": "storefront_backend",
   "version": "0.1.0",
   "description": "",
-  "type": "module",
   "main": "server.ts",
   "scripts": {
     "start": "node src/server.ts",
     "watch": "tsc-watch --esModuleInterop src/server.ts --outDir ./dist --onSuccess \"node ./dist/server.js\"",
-    "test": "ENV=test db-migrate --env test up && jasmine && db-migrate db:drop test",
+    "test": "ENV=test db-migrate --env test up && tsc jasmine && db-migrate db:drop test",
     "tsc": "tsc",
     "mig-up": "db-migrate up -m ./migrations --config ./database/dev.json",
     "mig-down": "db-migrate reset -m ./migrations--config ./database/dev.json"
